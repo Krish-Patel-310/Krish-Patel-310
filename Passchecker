@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Password Strength Checker</title>
+  <style>
+    :root {
+      --bg: #0b0b0f; --fg: #f5f7fb; --muted:#9aa3b2; --card:#14151b; --border:#23242b;
+      --red:#ef4444; --orange:#f97316; --yellow:#eab308; --lime:#84cc16; --green:#22c55e;
+      --accent:#6366f1;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji','Segoe UI Emoji'; background:var(--bg); color:var(--fg)}
+    .wrap{max-width:900px; margin:40px auto; padding:24px}
+    .title{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+    .title span.logo{display:inline-grid;place-items:center; width:36px; height:36px; border-radius:12px; background:linear-gradient(135deg,var(--accent),#2dd4bf)}
+    .subtitle{color:var(--muted); font-size:14px; margin-bottom:20px}
+    .card{background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; box-shadow:0 6px 24px rgba(0,0,0,.25)}
+    .row{display:flex; gap:10px; align-items:center}
+    input[type=password], input[type=text]{flex:1; padding:12px 14px; border-radius:12px; border:1px solid var(--border); background:#0f1117; color:var(--fg); outline:none}
+    button{border:1px solid var(--border); background:#1a1c24; color:var(--fg); padding:10px 14px; border-radius:12px; cursor:pointer}
+    button:hover{background:#20222b}
+    .hint{font-size:12px; color:var(--muted); display:flex; align-items:center; gap:6px; margin-top:6px}
+    .meter{width:100%; height:10px; background:#0f1117; border:1px solid var(--border); border-radius:999px; overflow:hidden}
+    .bar{height:100%; width:5%; background:var(--red); transition:width .5s cubic-bezier(.2,.8,.2,1)}
+    .grid{display:grid; gap:10px}
+    @media (min-width:700px){ .grid-2{grid-template-columns:repeat(2,1fr)} .grid-3{grid-template-columns:repeat(3,1fr)} }
+    .check{display:flex; align-items:center; gap:8px; font-size:14px}
+    .check.ok .dot{background:var(--green)}
+    .check.bad .dot{background:var(--red)}
+    .dot{width:10px; height:10px; border-radius:999px; background:#394150}
+    .stat{border:1px solid var(--border); border-radius:12px; padding:12px}
+    .stat .k{font-size:12px; color:var(--muted)}
+    .stat .v{font-weight:600; margin-top:4px}
+    .pill{display:inline-block; font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:#10131a}
+    ul{margin:8px 0 0 18px}
+    .actions{display:flex; gap:8px; flex-wrap:wrap}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="title"><span class="logo">🔒</span><h1>Password Strength Checker</h1></div>
+    <div class="subtitle">Real‑time analysis • Entropy • Crack‑time estimate • Generator (no external libraries)</div>
+
+    <div class="card">
+      <div class="grid" style="gap:12px">
+        <label for="pw">Enter password</label>
+        <div class="row">
+          <input id="pw" type="password" placeholder="Type here (demo only—don’t use real passwords)" autocomplete="off" />
+          <button id="toggle">Show</button>
+          <button id="gen">Generate</button>
+        </div>
+        <div class="hint">For safety, use sample passwords here—don’t paste your real password.</div>
+      </div>
+
+      <div style="margin-top:16px" class="grid">
+        <div class="row" style="justify-content:space-between">
+          <div>Strength</div>
+          <div id="level" class="pill">Very Weak</div>
+        </div>
+        <div class="meter"><div id="bar" class="bar"></div></div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:16px" id="checks"></div>
+
+      <div class="grid grid-3" style="margin-top:10px">
+        <div class="stat"><div class="k">Entropy</div><div id="entropy" class="v">0.0 bits</div></div>
+        <div class="stat"><div class="k">Offline attack (GPU)</div><div id="offline" class="v">0 seconds</div></div>
+        <div class="stat"><div class="k">Online attack (rate‑limited)</div><div id="online" class="v">0 seconds</div></div>
+      </div>
+
+      <div style="margin-top:16px">
+        <div style="margin-bottom:6px">Suggestions</div>
+        <div id="suggestions" class="hint">Type a password to get suggestions…</div>
+      </div>
+
+      <div class="actions" style="margin-top:14px">
+        <button id="copy" disabled>Copy Password</button>
+        <button id="clear">Clear</button>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+// ------------------------------
+// Utilities (no external libs)
+// ------------------------------
+const COMMON_PASSWORDS = new Set([
+  "123456","password","123456789","12345","qwerty","abc123","football","monkey","letmein","dragon",
+  "111111","baseball","iloveyou","123123","welcome","admin","login","princess","qwerty123","1q2w3e4r",
+]);
+
+function countCharsets(pw){
+  let hasLower=false, hasUpper=false, hasDigit=false, hasSymbol=false, hasSpace=false;
+  for(const ch of pw){
+    if(/[a-z]/.test(ch)) hasLower=true;
+    else if(/[A-Z]/.test(ch)) hasUpper=true;
+    else if(/[0-9]/.test(ch)) hasDigit=true;
+    else if(/\s/.test(ch)) hasSpace=true;
+    else hasSymbol=true;
+  }
+  return {hasLower,hasUpper,hasDigit,hasSymbol,hasSpace};
+}
+
+function charsetSize(set){
+  let size=0; if(set.hasLower) size+=26; if(set.hasUpper) size+=26; if(set.hasDigit) size+=10; if(set.hasSymbol) size+=33; if(set.hasSpace) size+=1; return size;
+}
+
+function toHumanTime(seconds){
+  if(!isFinite(seconds)) return "∞";
+  const units=[[60,'seconds'],[60,'minutes'],[24,'hours'],[365,'days']];
+  let val=seconds,unit='seconds';
+  for(const [step,name] of units){ if(val<step){ unit=name; break; } val/=step; unit=name; }
+  if(val>1000) return '>1000 '+unit;
+  return (val<10?val.toFixed(1):Math.round(val))+" "+unit;
+}
+
+function analyzePassword(pw){
+  const length=pw.length; const sets=countCharsets(pw); const size=charsetSize(sets);
+  const entropy=(length>0 && size>0)? length * Math.log2(size) : 0;
+  const guesses = entropy>0? Math.pow(2, entropy) : 0;
+  const OFFLINE_GPS = 1e10; // GPU guesses/sec (rough)
+  const ONLINE_GPS = 100;    // rate limited online
+  const offlineSeconds = guesses / OFFLINE_GPS;
+  const onlineSeconds = guesses / ONLINE_GPS;
+
+  const checks=[
+    {ok:length>=12,label:'At least 12 characters'},
+    {ok:sets.hasLower,label:'Contains lowercase'},
+    {ok:sets.hasUpper,label:'Contains uppercase'},
+    {ok:sets.hasDigit,label:'Contains a number'},
+    {ok:sets.hasSymbol,label:'Contains a symbol'},
+    {ok:!/(.)\1{2,}/.test(pw),label:'No repeated characters (like aaa)'},
+    {ok:!/(0123|1234|2345|3456|4567|5678|6789)/.test(pw),label:'No obvious sequences'},
+  ];
+
+  const suggestions=[];
+  if(length<12) suggestions.push('Use 12+ characters (16+ is better)');
+  if(!sets.hasUpper) suggestions.push('Add uppercase letters');
+  if(!sets.hasLower) suggestions.push('Add lowercase letters');
+  if(!sets.hasDigit) suggestions.push('Add numbers');
+  if(!sets.hasSymbol) suggestions.push('Add symbols (e.g., !@#)');
+  if(/(.)\1{2,}/.test(pw)) suggestions.push('Avoid repeated characters');
+  if(/(0123|1234|2345|3456|4567|5678|6789)/.test(pw)) suggestions.push('Avoid sequences like 1234');
+  if(/([a-zA-Z]{4,})\d{2,}$/.test(pw)) suggestions.push('Don’t end with predictable years');
+
+  const common = COMMON_PASSWORDS.has(pw.toLowerCase());
+  if(common) suggestions.unshift('This is a very common password—do not use it');
+
+  let score=0; // 0..4
+  if(entropy>=28) score=1;
+  if(entropy>=36) score=2;
+  if(entropy>=60) score=3;
+  if(entropy>=80) score=4;
+  if(common) score=Math.min(score,1);
+  const labels=['Very Weak','Weak','Fair','Strong','Very Strong'];
+
+  return {length,sets,entropy,offlineSeconds,onlineSeconds,checks,suggestions,common,score,level:labels[score]};
+}
+
+// Fixed generatePassword function
+function generatePassword({length=16,requireAll=true}={}){
+  const lowers='abcdefghijklmnopqrstuvwxyz';
+  const uppers='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const digits='0123456789';
+  const symbols='!@#$%^&*()-_=+[]{}:;,.?';
+  const sets=[lowers,uppers,digits,symbols];
+  let pw='';
+  if(requireAll){
+    for(const s of sets){
+      pw += s[Math.floor(Math.random()*s.length)];
+    }
+  }
+  const all=sets.join('');
+  while(pw.length<length){
+    pw += all[Math.floor(Math.random()*all.length)];
+  }
+  // Shuffle the password to randomize character positions
+  pw = pw.split('').sort(()=>Math.random()-0.5).join('');
+  return pw;
+}
+
+// ------------------------------
+// DOM wiring
+// ------------------------------
+const $ = s => document.querySelector(s);
+const pwEl = $('#pw');
+const bar = $('#bar');
+const level = $('#level');
+const checksEl = $('#checks');
+const entropyEl = $('#entropy');
+const offlineEl = $('#offline');
+const onlineEl = $('#online');
+const suggEl = $('#suggestions');
+
+function renderChecks(checks){
+  checksEl.innerHTML = checks.map(c => `
+    <div class="check ${c.ok?'ok':'bad'}"><span class="dot"></span>${c.label}</div>
+  `).join('');
+}
+
+function update(){
+  const pw = pwEl.value;
+  const a = analyzePassword(pw);
+  const widths=[5,25,50,75,100];
+  const colors=['var(--red)','var(--orange)','var(--yellow)','var(--lime)','var(--green)'];
+  bar.style.width = widths[a.score] + '%';
+  bar.style.background = colors[a.score];
+  level.textContent = a.level;
+  entropyEl.textContent = a.entropy.toFixed(1) + ' bits';
+  offlineEl.textContent = toHumanTime(a.offlineSeconds);
+  onlineEl.textContent = toHumanTime(a.onlineSeconds);
+  renderChecks(a.checks);
+  if(!pw){
+    suggEl.className='hint';
+    suggEl.textContent='Type a password to get suggestions…';
+  }else if(a.suggestions.length===0){
+    suggEl.className='hint';
+    suggEl.textContent='Looks good. Consider using a password manager and enable 2FA.';
+  }else{
+    suggEl.className='';
+    suggEl.innerHTML = '<ul>'+a.suggestions.map(s=>`<li>${s}</li>`).join('')+'</ul>';
+  }
+  $('#copy').disabled = !pw;
+}
+
+pwEl.addEventListener('input', update);
+
+$('#toggle').addEventListener('click', ()=>{
+  pwEl.type = pwEl.type==='password' ? 'text' : 'password';
+  $('#toggle').textContent = pwEl.type==='password' ? 'Show' : 'Hide';
+});
+
+$('#gen').addEventListener('click', ()=>{
+  const p = generatePassword({length:16});
+  pwEl.value = p; update();
+});
+
+$('#copy').addEventListener('click', async ()=>{
+  try { await navigator.clipboard.writeText(pwEl.value); } catch {}
+});
+
+$('#clear').addEventListener('click', ()=>{
+  pwEl.value = ''; update();
+});
+
+// initial render
+update();
+</script>
+</body>
+</html>
