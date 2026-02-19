@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Home | Brew House</title>
+    <link rel="stylesheet" href="style.css"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#b87332", "primary-hover": "#a06228", "background-dark": "#1A1A1A", "surface-dark": "#2a221b" },
+                    fontFamily: { "display": ["Manrope", "sans-serif"] },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background-dark text-slate-100 font-display antialiased overflow-x-hidden">
+
+    <header class="sticky top-0 z-[100] w-full backdrop-blur-md bg-background-dark/90 border-b border-white/10 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 text-white">
+                <span class="material-symbols-outlined text-primary text-3xl">coffee_maker</span>
+                <h2 class="text-xl font-extrabold tracking-tight uppercase">Brew House</h2>
+            </a>
+            <nav class="hidden md:flex items-center gap-8">
+                <a class="text-primary border-b-2 border-primary pb-1 text-sm font-bold uppercase tracking-widest" href="index.html">Home</a>
+                <a class="text-slate-300 hover:text-primary transition-colors text-sm font-bold uppercase tracking-widest" href="menu.html">Menu</a>
+                <a class="text-slate-300 hover:text-primary transition-colors text-sm font-bold uppercase tracking-widest" href="reservations.html">Reservations</a>
+                <a class="text-slate-300 hover:text-primary transition-colors text-sm font-bold uppercase tracking-widest" href="culture.html">Culture</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <a href="reservations.html" class="hidden sm:block bg-primary hover:bg-primary-hover px-5 py-2 rounded text-white text-xs font-bold uppercase transition-all">Book a Table</a>
+                <button class="text-white relative">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                    <span class="cart-badge absolute -top-2 -right-2 bg-primary text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative flex flex-col lg:flex-row min-h-[90vh] border-b border-white/5 bg-noise">
+        <div class="flex-1 flex flex-col justify-center px-6 py-12 lg:px-20">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-6 w-fit">
+                <span class="relative flex h-2 w-2"><span class="animate-ping absolute h-full w-full rounded-full bg-red-500 opacity-75"></span><span class="relative rounded-full h-2 w-2 bg-red-600"></span></span>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-primary">Live: Brewing Ethiopian Yirgacheffe</span>
+            </div>
+            <h1 class="text-5xl lg:text-7xl font-black leading-tight text-white mb-6">Coffee, <br/><span class="text-primary">Industrial Soul.</span></h1>
+            <p class="text-slate-400 text-lg mb-10 max-w-md">Experience artisan roasts and premium connectivity in the heart of the city.</p>
+            <div class="flex gap-4">
+                <a href="menu.html" class="bg-primary px-8 py-4 rounded font-bold text-white hover:bg-primary-hover shadow-lg shadow-primary/20 transition-all">Explore Menu</a>
+                <a href="reservations.html" class="border border-white/10 px-8 py-4 rounded font-bold hover:bg-white/5 transition-all">Reserve Spot</a>
+            </div>
+        </div>
+        <div class="flex-1 h-[400px] lg:h-auto bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAS3mw2tDgQdjN8ztAtPU6FedO1wcaomi9PsRjLY_qJxfNjb9ioktCCFOlv4M2nFOAxORG6Jm4hkSadkDHfzHVkO08ZaPbrzd8ShUdMuU9KZEvpzzmJgRJXiiXhYtUZ2nC9STFTPFQE9VQeMbtMe-r6ut5GSZTMrNJaQYW00-yc40sNayz6U_64nxwj4Htmb6NjGhL7KIFaPFKNKGP3LfzcymM3A8aobq4wal9qsYRB3dCEfKrTYZVhVkSMQ6SveK6epTqDXx9lJLqq');"></div>
+    </section>
+
+    <footer class="bg-[#14100c] border-t border-white/5 pt-16 pb-10 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-white/5 pb-10">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center gap-3 text-white mb-4">
+                    <span class="material-symbols-outlined text-primary text-3xl">coffee_maker</span>
+                    <h2 class="text-xl font-black uppercase">Brew House</h2>
+                </div>
+                <p class="text-slate-500 text-sm max-w-sm">Ethically sourced, passionately roasted, and brewed with industrial precision since 2015.</p>
+            </div>
+            <div>
+                <h3 class="text-primary font-bold uppercase tracking-widest text-xs mb-4">Hours</h3>
+                <p class="text-slate-400 text-sm">Mon - Fri: 7am - 8pm</p>
+                <p class="text-slate-400 text-sm">Sat - Sun: 8am - 6pm</p>
+            </div>
+            <div>
+                <h3 class="text-primary font-bold uppercase tracking-widest text-xs mb-4">Location</h3>
+                <p class="text-slate-400 text-sm">123 Foundry Lane,<br/>Metro District, NY</p>
+            </div>
+        </div>
+        <p class="text-center text-slate-700 text-[10px] mt-8 uppercase tracking-widest font-bold">© 2026 Brew House Inc.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

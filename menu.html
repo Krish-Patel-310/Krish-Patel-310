@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Brew House | The Menu</title>
+    
+    <link rel="stylesheet" href="style.css"/>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#b87332",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#1f1913",
+                        "surface-dark": "#2a221b",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col overflow-x-hidden">
+
+    <header class="sticky top-0 z-50 bg-background-dark/95 backdrop-blur-md border-b border-[#423529] px-6 py-4 md:px-10">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 text-white">
+                <div class="size-6 text-primary">
+                    <span class="material-symbols-outlined text-[28px]">coffee_maker</span>
+                </div>
+                <h2 class="text-white text-xl font-extrabold tracking-wide uppercase">BREW HOUSE</h2>
+            </a>
+            
+            <nav class="hidden md:flex items-center gap-8">
+                <a class="text-white hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="index.html">Home</a>
+                <a class="text-primary text-sm font-bold uppercase tracking-wider border-b-2 border-primary pb-1" href="menu.html">Menu</a>
+                <a class="text-white hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="reservations.html">Reservations</a>
+                <a class="text-slate-300 hover:text-primary transition-colors text-sm font-bold uppercase tracking-widest" href="culture.html">Culture</a>
+            </nav>
+            
+            <div class="flex gap-4">
+                <button class="flex items-center justify-center size-10 rounded-lg bg-surface-dark hover:bg-[#423529] text-white transition-colors relative">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                    <span class="cart-badge absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="relative w-full h-[280px] md:h-[320px] bg-surface-dark flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+        <div class="absolute inset-0 z-0 bg-cover bg-center opacity-40 mix-blend-overlay" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDCUJn2y-YaBZEdH-j8Fxc8mJhmG_wJMT0R0zv9EzrISpmDhtieGK8I-AWc7IBmWUvRYyMl8bNa7Qc6Ld76iPpDcZz3-eUd00O4cKoyMF3x0TPJ15V1n1zs4pUHPnS53TPM1Q27wcf6GMRmfzMAk3H52xoTr0PiHCh6xtbwEKAlEjs37ZaI89-cN7ds1cCJyv8WM3XJgkdsBm6fRDT1GwKg-jp5MeU7LVuCf27Ty97s0f12TYjLH_zlVM653oa4s7K_E-UAIhruEqkx');"></div>
+        <div class="absolute inset-0 z-10 bg-gradient-to-t from-background-dark via-transparent to-background-dark/80"></div>
+        <div class="relative z-20 max-w-2xl">
+            <h1 class="text-4xl md:text-5xl font-black tracking-tighter text-white mb-3">THE MENU</h1>
+            <p class="text-slate-300 text-base md:text-lg max-w-lg mx-auto font-medium">Small batch roasts. Artisanal pastries. Industrial soul.</p>
+        </div>
+    </div>
+
+    <div class="sticky top-[73px] z-40 bg-background-dark/95 backdrop-blur shadow-sm border-b border-[#423529]">
+        <div class="max-w-7xl mx-auto px-4 md:px-10">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 py-3">
+                <div class="flex overflow-x-auto pb-1 md:pb-0 gap-8 no-scrollbar">
+                    <button data-filter="all" class="filter-btn flex flex-col items-center gap-2 group text-primary border-b-2 border-primary pb-1 font-bold text-sm tracking-widest uppercase">
+                        All Items
+                    </button>
+                    <button data-filter="espresso" class="filter-btn flex flex-col items-center gap-2 group text-slate-400 hover:text-white font-bold text-sm tracking-widest uppercase transition-colors">
+                        Espresso Bar
+                    </button>
+                    <button data-filter="bakery" class="filter-btn flex flex-col items-center gap-2 group text-slate-400 hover:text-white font-bold text-sm tracking-widest uppercase transition-colors">
+                        The Bakery
+                    </button>
+                </div>
+                <div class="flex gap-3 overflow-x-auto pb-1 md:pb-0 no-scrollbar">
+                    <button class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[#423529] hover:border-primary/50 bg-surface-dark/50 text-xs font-semibold text-slate-300 transition-colors whitespace-nowrap">
+                        <span class="material-symbols-outlined text-[16px]">tune</span> Filters
+                    </button>
+                    <button class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[#423529] hover:border-primary/50 bg-surface-dark/50 text-xs font-semibold text-slate-300 transition-colors whitespace-nowrap">
+                        Roast Level <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 md:px-10 py-10">
+        
+        <div class="flex items-baseline justify-between mb-8">
+            <h2 class="text-2xl font-bold tracking-tight text-white flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary">local_cafe</span> ESPRESSO BAR
+            </h2>
+            <span class="text-sm text-slate-500 font-medium">8 Items</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mb-12">
+            
+            <div data-category="espresso" class="menu-item group bg-surface-dark rounded-xl overflow-hidden border border-[#423529] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-black/40 hover:-translate-y-1 flex flex-col h-full">
+                <div class="relative h-48 overflow-hidden">
+                    <div class="absolute top-3 left-3 z-10 bg-black/60 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold text-white uppercase tracking-wider border border-white/10">Signature</div>
+                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJnzQX513k9YMEqxOFYG1deXAsiSHwmwv7zNvzcILN__6L7o6SfL6ey51zCd-7AppHgB3jAGasbPeeW2pY62bjtCs9ZDXj-2RiY5TdARDVA2g99RTPi70h_xqXYrypTOKBCAAB7ssA-s5lZno2foGug5hH8qKpJ5LryLTNp4H8vi7q8xW5TP-0U_A78M0234ZbuBVoL_SZukUCYrHTtS7XahSkPtuvMxcIsRIIiPBKDcIrroyegEyZ3E1m6OQUl6qOQopyVleJOxI3"/>
+                </div>
+                <div class="p-5 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-lg font-bold text-white tracking-tight">Obsidian Cortado</h3>
+                        <span class="text-primary font-bold">$4.50</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">Equal parts espresso and warm milk. Smooth, strong, and balanced with a velvet finish.</p>
+                    <div class="flex flex-wrap gap-2 mb-6 mt-auto">
+                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#332a22] text-[10px] font-bold text-primary uppercase tracking-wide"><span class="material-symbols-outlined text-[12px]">cookie</span> Dark Cocoa</span>
+                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#332a22] text-[10px] font-bold text-primary uppercase tracking-wide"><span class="material-symbols-outlined text-[12px]">forest</span> Nutty</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 mt-auto">
+                        <button class="px-3 py-2 rounded-lg border border-slate-600 hover:border-white text-slate-300 hover:text-white text-xs font-bold uppercase tracking-wider transition-colors">Details</button>
+                        <button class="add-to-cart px-3 py-2 rounded-lg bg-primary hover:bg-[#a0632a] text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-md shadow-primary/20">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div data-category="espresso" class="menu-item group bg-surface-dark rounded-xl overflow-hidden border border-[#423529] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-black/40 hover:-translate-y-1 flex flex-col h-full">
+                <div class="relative h-48 overflow-hidden">
+                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDY7nn7Tdt-_khwD47cm_bbosoBoIAwIJD57F7cbkKHajqDIxk55f8ZvmZ0lcOLhjv0Tf-DTLZdEc9bZpQCFlWcRtp91e5KWfxynv57d0mqJ4CJe516i3UyfvhFvzdF5m2JVXJ7p5mPdSvcTouXbJl2i59rSeOMEC9LctMIbgjnoFRR6L1dcClQtXhl7cVVVdFRLxKxGGWhIwNalwPot1cE6p1Nj92PMDkSy7D7mj7OFBcZLEnav_GOqGkqZkC9cu3dWaGZtcLSaNbF"/>
+                </div>
+                <div class="p-5 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-lg font-bold text-white tracking-tight">Velvet Flat White</h3>
+                        <span class="text-primary font-bold">$4.75</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">Double shot of espresso topped with silky, micro-foamed milk.</p>
+                    <div class="flex flex-wrap gap-2 mb-6 mt-auto">
+                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#332a22] text-[10px] font-bold text-primary uppercase tracking-wide"><span class="material-symbols-outlined text-[12px]">water_drop</span> Creamy</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 mt-auto">
+                        <button class="px-3 py-2 rounded-lg border border-slate-600 hover:border-white text-slate-300 hover:text-white text-xs font-bold uppercase tracking-wider transition-colors">Details</button>
+                        <button class="add-to-cart px-3 py-2 rounded-lg bg-primary hover:bg-[#a0632a] text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-md shadow-primary/20">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div data-category="espresso" class="menu-item group bg-surface-dark rounded-xl overflow-hidden border border-[#423529] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-black/40 hover:-translate-y-1 flex flex-col h-full">
+                <div class="relative h-48 overflow-hidden">
+                    <div class="absolute top-3 left-3 z-10 bg-primary/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold text-white uppercase tracking-wider">Staff Pick</div>
+                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNOtoc2y2QNRH_1YKTzYjIY9Ko4xPbt6vin7Hu5skQYnSnaJtf7RRRpvPtc8PljqzvCv9XzfhGrXYcMykuBztENwGxUDHH62u7W_CnRj5qCJ4CIN2AYZKL6SVNYa2HnY38a53aSDsCFuOgGuDP43wj-_ri_ynRVmw6xvOEHoHGHEc0KeVmxnUJ_NTeMDVvAHZEdAOfySh5k46Vy260DmbOY1BWlDcW9amMKfxUYEI2bcUrOSSvh6jPaHoT3DbBkruTmWYFdqxOABDh"/>
+                </div>
+                <div class="p-5 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-lg font-bold text-white tracking-tight">Doppio Espresso</h3>
+                        <span class="text-primary font-bold">$3.25</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">A double shot of our house blend. Pure, intense, and full-bodied.</p>
+                    <div class="flex flex-wrap gap-2 mb-6 mt-auto">
+                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#332a22] text-[10px] font-bold text-primary uppercase tracking-wide"><span class="material-symbols-outlined text-[12px]">bolt</span> Intense</span>
+                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#332a22] text-[10px] font-bold text-primary uppercase tracking-wide"><span class="material-symbols-outlined text-[12px]">eco</span> Organic</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 mt-auto">
+                        <button class="px-3 py-2 rounded-lg border border-slate-600 hover:border-white text-slate-300 hover:text-white text-xs font-bold uppercase tracking-wider transition-colors">Details</button>
+                        <button class="add-to-cart px-3 py-2 rounded-lg bg-primary hover:bg-[#a0632a] text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-md shadow-primary/20">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div data-category="espresso" class="menu-item group bg-surface-dark rounded-xl overflow-hidden border border-[#423529] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-black/40 hover:-translate-y-1 flex flex-col h-full">
+                <div class="relative h-48 overflow-hidden">
+                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHcw2oXlU0NfhBCjGetwbV3ehn0Ir296OQqg3Dvy1whvJ-LMANksc_XW-gzFNM1UWDJd2dQCVblXuIafmgZQP7qL_HhTwnbaFIgdyAM3MNnqH-hfKlQnGMKjOYxKxzy0NYyaLzFm3XjZId7t-nWsg4qiRHe5z6ClKOtTuuUmQjMJCaWtpTwNhD-7ITomV73mKBxRujMEvqFrqbnothIJIOvCds9TNH0VCYu0zqsMxzpOfQqf4rC9CTr_04sx47cfYponDPWchVF-79"/>
+                </div>
+                <div class="p-5 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-lg font-bold text-white tracking-tight">Dark Mocha</h3>
+                        <span class="text-primary font-bold">$5.50</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">Espresso with bittersweet mocha sauce and steamed milk.</p>
+                    <div class="flex flex-wrap gap-2 mb-6 mt-auto">
+                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#332a22] text-[10px] font-bold text-primary uppercase tracking-wide"><span class="material-symbols-outlined text-[12px]">cookie</span> Sweet</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 mt-auto">
+                        <button class="px-3 py-2 rounded-lg border border-slate-600 hover:border-white text-slate-300 hover:text-white text-xs font-bold uppercase tracking-wider transition-colors">Details</button>
+                        <button class="add-to-cart px-3 py-2 rounded-lg bg-primary hover:bg-[#a0632a] text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-md shadow-primary/20">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div data-category="espresso" class="menu-item group bg-surface-dark rounded-xl overflow-hidden border border-[#423529] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-black/40 hover:-translate-y-1 flex flex-col h-full">
+                <div class="relative h-48 overflow-hidden">
+                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyL9HgtXnQZyq7PYOhXv_BYlgobGniGmtPMd8b7oZc2wYnvkVe9bTrBlYQgZPU215gVDR2miaF6i73HEEoWReiLmoExCI2TjW210_WytYLNZPZqerR7rjOp-z17ZQxuJq5V7a8NT1xDAaOFfSPOWv9WtBCO5COV-fqs-bJly6_iDaonTSh7yFhZGhVEz1cYzxza3v-Qoa2MYOaqFtend3Grgpt4hHVOpHYOT0zxDfIo-2eZi5Mj_qI3qEJozqLrJKDrU-HEYV8bqgE"/>
+                </div>
+                <div class="p-5 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-lg font-bold text-white tracking-tight">Iced Americano</h3>
+                        <span class="text-primary font-bold">$4.00</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">Espresso shots topped with cold water and ice. Refreshing and bold.</p>
+                    <div class="flex flex-wrap gap-2 mb-6 mt-auto">
+                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#332a22] text-[10px] font-bold text-primary uppercase tracking-wide"><span class="material-symbols-outlined text-[12px]">ac_unit</span> Cold</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 mt-auto">
+                        <button class="px-3 py-2 rounded-lg border border-slate-600 hover:border-white text-slate-300 hover:text-white text-xs font-bold uppercase tracking-wider transition-colors">Details</button>
+                        <button class="add-to-cart px-3 py-2 rounded-lg bg-primary hover:bg-[#a0632a] text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-md shadow-primary/20">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div data-category="espresso" class="menu-item group bg-surface-dark rounded-xl overflow-hidden border border-[#423529] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-black/40 hover:-translate-y-1 flex flex-col h-full">
+                <div class="relative h-48 overflow-hidden">
+                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDc92PwC5Uxv75zhPxB_k77CIVl8C1ZW87S7Kf9IFVQAywd7XdybF8kakVje_9elb9IDrLxv8gHQPjhAi57srUYV_ogoBLDB8ebOnztp20bdLzuxDREvAnDcvLgsF0OXYbBa1zaGKGlx0mi13iJauIOZvC5k0re5k55cgcMsIDpWLfBy2ZfbqTzZCvUwXdt2vgtzCsRQEpGeQaKEZSOu1V1FgadS17clPG8VmzRA9jRZd2dMzBHq_XT01RTp69uBK-olJaAfhh2fjtF"/>
+                </div>
+                <div class="p-5 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-lg font-bold text-white tracking-tight">Caramel Macchiato</h3>
+                        <span class="text-primary font-bold">$5.00</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">Freshly steamed milk with vanilla-flavored syrup marked with espresso and topped with a caramel drizzle.</p>
+                    <div class="grid grid-cols-2 gap-3 mt-auto">
+                        <button class="px-3 py-2 rounded-lg border border-slate-600 hover:border-white text-slate-300 hover:text-white text-xs font-bold uppercase tracking-wider transition-colors">Details</button>
+                        <button class="add-to-cart px-3 py-2 rounded-lg bg-primary hover:bg-[#a0632a] text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-md shadow-primary/20">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div data-category="espresso" class="menu-item group bg-surface-dark rounded-xl overflow-hidden border border-[#423529] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-black/40 hover:-translate-y-1 flex flex-col h-full">
+                <div class="relative h-48 overflow-hidden">
+                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpiCpw8EUuuy7Uwl9OX6NA958JLITH_67coGbTmuD9qiRHzCPK-7yqeraZOHZNuYPckvHuWuvuukP1ZQPlhdBJ0gk5m91SiE7WCpJA3WbzDWpx1t-mCHCPq1_R4lotK77Fq7AKWxaGAHUtXMqbpeBRwyvE0tPRv_wmRyfv41MU-aaMuJ1rm9Po9yclsbn60n9TG2lV-68W0D7gRI2NZtPioxZG1W6maZ-dKE2vB8ahzTZMm5jga9fQLrubpnR29ihfnPCkvyosf6DR"/>
+                </div>
+                <div class="p-5 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-lg font-bold text-white tracking-tight">Classic Latte</h3>
+                        <span class="text-primary font-bold">$4.50</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">Our signature espresso with steamed milk and a light layer of foam.</p>
+                    <div class="grid grid-cols-2 gap-3 mt-auto">
+                        <button class="px-3 py-2 rounded-lg border border-slate-600 hover:border-white text-slate-300 hover:text-white text-xs font-bold uppercase tracking-wider transition-colors">Details</button>
+                        <button class="add-to-cart px-3 py-2 rounded-lg bg-primary hover:bg-[#a0632a] text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-md shadow-primary/20">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div data-category="espresso" class="menu-item group bg-surface-dark rounded-xl overflow-hidden border border-[#423529] flex flex-col h-full">
+                <div class="relative h-48 overflow-hidden">
+                    <div class="absolute top-3 left-3 z-10 bg-red-600/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold text-white uppercase tracking-wider">Sold Out</div>
+                    <img class="w-full h-full object-cover transform grayscale opacity-70" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXr0AAHeHnP4yT79LXqilVBK69iq5rP_WpkFrglqWa_RkcSSMAeotZFiDOGbrTyD_Q7o9pDIEU2iKjkPqsjWpUJXCvrSOaLjHIYs8qTOczS06mx8X4PJghr1K729muodyb9h9r0xL8FWNFTJiQt1jo-_BpT2Yc7FparEQylKjjyEzPr5pIN3qkp48W2En0xDOPdwDMYq9qu1lq4APfZlqhpzuC4c8a9i41FGNBPY990Iq0ftNgVhD0O6P9d1wglnB_7E5me9K552ds"/>
+                </div>
+                <div class="p-5 flex flex-col flex-grow opacity-60">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-lg font-bold text-white tracking-tight">Cappuccino</h3>
+                        <span class="text-primary font-bold">$4.25</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">Dark, rich espresso lies in wait under a smoothed and stretched layer of thick milk foam.</p>
+                    <div class="grid grid-cols-2 gap-3 mt-auto">
+                        <button disabled class="px-3 py-2 rounded-lg border border-slate-600 cursor-not-allowed text-slate-500 text-xs font-bold uppercase tracking-wider">Details</button>
+                        <button disabled class="px-3 py-2 rounded-lg bg-[#423529] cursor-not-allowed text-slate-500 text-xs font-bold uppercase tracking-wider">Add +</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full h-px bg-[#423529] my-12"></div>
+
+        <div class="flex items-baseline justify-between mb-8">
+            <h2 class="text-2xl font-bold tracking-tight text-white flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary">bakery_dining</span> THE BAKERY
+            </h2>
+            <a class="text-primary text-sm font-bold uppercase tracking-wider hover:text-white transition-colors" href="#">View All</a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            
+            <div data-category="bakery" class="menu-item group bg-surface-dark rounded-xl overflow-hidden border border-[#423529] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-black/40 hover:-translate-y-1 flex flex-col h-full">
+                <div class="relative h-40 overflow-hidden">
+                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbBxyyvDyqbNBKcjTr4yvcwABdOvYJk8hJ6xpxoa_YoINPYUQahGAZc3ZpBdy09R2MBQkV8LWuROG8QpEDCq654HClvFDrbbBQQwmefRz4zk7kH3vv7zHSvFk7EeLOREGdclC5XlQIsaWkkDsw8EulsEUnDg9f0u-UKuJJZupAfplHidR-BybSl6gnsaXPibCGtp1eT7nCjrljnvqPUkpRZgEwTLrPQbXMvT0o7hD26iREc1xSSkxOu9qtKLmzpKlnaUFX2NWQH4sG"/>
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="text-base font-bold text-white tracking-tight">Butter Croissant</h3>
+                        <span class="text-primary font-bold text-sm">$3.50</span>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-3">Flaky, buttery, and freshly baked every morning.</p>
+                    <button class="add-to-cart w-full mt-auto px-3 py-2 rounded-lg bg-surface-dark border border-primary text-primary hover:bg-primary hover:text-white text-xs font-bold uppercase tracking-wider transition-colors">Add to Order</button>
+                </div>
+            </div>
+
+            <div data-category="bakery" class="menu-item group bg-surface-dark rounded-xl overflow-hidden border border-[#423529] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-black/40 hover:-translate-y-1 flex flex-col h-full">
+                <div class="relative h-40 overflow-hidden">
+                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRx0JuxsEPIRPpKqsOC88T6jJmNiBFyNN4IPlLN5aPd-39lbrRzoNq4EZA8-gQUq8KYFqN8pTgLmMGP64dlmjlefZIq2YZzsETBxynKuTn-0_uGF9DBQ9q-KWQRft5m4fJsXfIyPMVcTzW6MK1LDXgZtpqEg17LoGicV1xQYQ1g1NBmxBl7R0L8plNPSm1mlYH6ARrU0O4me4kMF664x_6fiQT9CDOUYcIqTMcDEcxl-bJdJntSHlmr1e0uZrvqKwB9BgvYhM_IIZ7"/>
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="text-base font-bold text-white tracking-tight">Dark Choco Muffin</h3>
+                        <span class="text-primary font-bold text-sm">$3.75</span>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-3">Rich chocolate muffin with chunks of belgian chocolate.</p>
+                    <button class="add-to-cart w-full mt-auto px-3 py-2 rounded-lg bg-surface-dark border border-primary text-primary hover:bg-primary hover:text-white text-xs font-bold uppercase tracking-wider transition-colors">Add to Order</button>
+                </div>
+            </div>
+
+            <div data-category="bakery" class="menu-item group bg-surface-dark rounded-xl overflow-hidden border border-[#423529] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-black/40 hover:-translate-y-1 flex flex-col h-full">
+                <div class="relative h-40 overflow-hidden">
+                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAszQCLwH_ChjBAWdZ93hQlg_7A9jjwkRq-crOGn-mtF_vOmdc4PsgLSl8gBEp4mjZK0uj5keIHxGQMuko8bN6H7N41JZUwF-csrHTqQDIiOUvaDbtflUNBcNrkr0nrKaop8kxy6CHo2c0ADWhfLe-ZUJqrojbrfI351dFyJOrzaYspRirZILRrtqpEto2qjXs4mylL44xAAp0uSidpJyWl3-3mK1wNlncE5mPV_UDZeo48gyxipwiC75FmLadO80wCn-xGX4kygJKJ"/>
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="text-base font-bold text-white tracking-tight">Banana Nut Bread</h3>
+                        <span class="text-primary font-bold text-sm">$3.25</span>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-3">Moist banana bread with walnuts and a hint of cinnamon.</p>
+                    <button class="add-to-cart w-full mt-auto px-3 py-2 rounded-lg bg-surface-dark border border-primary text-primary hover:bg-primary hover:text-white text-xs font-bold uppercase tracking-wider transition-colors">Add to Order</button>
+                </div>
+            </div>
+
+            <div data-category="bakery" class="menu-item group bg-surface-dark rounded-xl overflow-hidden border border-[#423529] hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-black/40 hover:-translate-y-1 flex flex-col h-full">
+                <div class="relative h-40 overflow-hidden">
+                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkenKGbPNcmiEX0Dq8gZvs8rzmVHN3IMAylcFmww6c-4GcA8OQVSZt_N2cBaW6XBQjrn89JM9nJB26aYjovl-jqWU9ugj5Vr67vAUT0AWdCtcwbg5zTrdykqj57JBp-6RqtMo2x0j4-_ZkSDjwtxTOpo1bGPqQrSHusbuDi9aL1nb3IvMhP5OxhaLtuhPK8u9TWXO6hMnNVgdoMIIsforvlgHcmv30QHtbIvzukgVSOqcTSCBuozPXdwkwW0P8302In3vpIvqH2_Jx"/>
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="text-base font-bold text-white tracking-tight">Oatmeal Cookie</h3>
+                        <span class="text-primary font-bold text-sm">$2.50</span>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-3">Chewy oatmeal raisin cookie with a touch of honey.</p>
+                    <button class="add-to-cart w-full mt-auto px-3 py-2 rounded-lg bg-surface-dark border border-primary text-primary hover:bg-primary hover:text-white text-xs font-bold uppercase tracking-wider transition-colors">Add to Order</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-surface-dark border-t border-[#423529] py-10 mt-10">
+        <div class="max-w-7xl mx-auto px-4 md:px-10 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3 text-white">
+                <div class="size-6 text-primary">
+                    <span class="material-symbols-outlined text-[24px]">coffee_maker</span>
+                </div>
+                <h2 class="text-white text-lg font-bold tracking-wide uppercase">BREW HOUSE</h2>
+            </div>
+            <div class="flex gap-6 text-slate-400 text-sm">
+                <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+                <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+                <a class="hover:text-primary transition-colors" href="#">Contact</a>
+            </div>
+            <p class="text-slate-500 text-xs">© 2026 Brew House. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="fixed bottom-6 right-6 z-50">
+        <button class="flex items-center gap-3 bg-primary hover:bg-[#a0632a] text-white px-5 py-3 rounded-full shadow-lg shadow-black/50 transition-transform hover:scale-105 group">
+            <span class="material-symbols-outlined">receipt_long</span>
+            <span class="font-bold uppercase text-sm tracking-wider">Current Order</span>
+            <span class="cart-badge bg-white text-primary px-2 py-0.5 rounded-full text-xs font-black">0</span>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
